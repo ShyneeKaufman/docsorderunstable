@@ -1,4 +1,3 @@
-// --- DOCX шаблон логика ---
 let headerHtml = '';
 const headerStatus = document.getElementById('headerStatus');
 const headerDocxInput = document.getElementById('headerDocxInput');
@@ -36,7 +35,6 @@ function exportFullDocx() {
     const fio = document.getElementById('fioInput').value.trim() || '________________';
     let finalHeaderHtml = headerHtml.replace(/\{FIO\}/g, fio);
 
-    // Формируем HTML для таблицы (без столбца "Дія")
     let table = document.createElement('table');
     table.style.width = "100%";
     table.style.borderCollapse = "collapse";
@@ -116,7 +114,6 @@ const editModal = document.getElementById('editModal');
 let currentEditIndex = null;
 let currentEditSource = null;
 
-// -- Обработчики кнопок и полей -- //
 document.getElementById('replaceBtn').addEventListener('click', applyReplace);
 document.getElementById('replaceDateBtn').addEventListener('click', applyDateReplace);
 document.getElementById('copyTableBtn').addEventListener('click', copyTable);
@@ -135,8 +132,6 @@ window.addEventListener('DOMContentLoaded', () => {
   renderList();
   renderTable();
 });
-
-// -- Функции для работы с документами -- //
 
 function saveDocuments() {
   localStorage.setItem('documents', JSON.stringify(uniqueDocuments));
@@ -215,7 +210,6 @@ function addDocumentToTable(name, date = today, sheets = '1', note = '') {
   });
   row.addEventListener('dragend', () => row.classList.remove('dragging'));
 
-  // Кнопки редактирования и удаления
   const editBtn = document.createElement('button');
   editBtn.textContent = '✎';
   editBtn.className = 'edit-btn';
@@ -440,7 +434,6 @@ function exportTable() {
   document.body.removeChild(link);
 }
 
-// Модальное окно закрытие по клику вне
 window.onclick = function(event) {
   if (event.target == editModal) {
     closeModal();
