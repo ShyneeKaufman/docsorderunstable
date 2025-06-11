@@ -28,9 +28,9 @@
     textarea { width: 100%; height: 100px; margin-top: 10px; }
     .fio-panel, .header-docx-panel { margin: 10px 0 15px 0; padding: 8px; background: #f2f9ff; border-radius: 6px; }
   </style>
-  <!-- Внешние библиотеки только через src -->
+  <!-- Только CDN! -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.7.0/mammoth.browser.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.4.1/html-docx.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.4.1/dist/html-docx.js"></script>
 </head>
 <body>
   <div class="fio-panel">
@@ -39,7 +39,7 @@
   <div class="header-docx-panel">
     <label>Завантажити шаблон DOCX (шапка): <input type="file" id="headerDocxInput" accept=".docx"></label>
     <span id="headerStatus" style="color:green; margin-left:10px;"></span>
-    <div style="font-size:12px; color:#555; margin-top:4px;">В шаблоне замість ПІБ використовуйте <b>{FIO}</b></div>
+    <div style="font-size:12px; color:#555; margin-top:4px;">В шаблоні замість ПІБ використовуйте <b>{FIO}</b></div>
   </div>
   <button id="exportFullDocxBtn" style="margin-bottom:16px;">Експортувати у Word (DOCX)</button>
 
