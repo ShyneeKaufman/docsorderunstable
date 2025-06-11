@@ -172,22 +172,22 @@ function renderList(filteredDocs = uniqueDocuments) {
     const editBtn = document.createElement('button');
     editBtn.textContent = '✎';
     editBtn.className = 'edit-btn';
-    editBtn.onclick = (e) => {
+    editBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       currentEditIndex = index;
       currentEditSource = 'list';
       document.getElementById('editDocName').value = doc;
       editModal.style.display = 'block';
-    };
+    });
     const delBtn = document.createElement('button');
     delBtn.textContent = '✖';
     delBtn.className = 'delete-btn';
-    delBtn.onclick = (e) => {
+    delBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       uniqueDocuments.splice(index, 1);
       saveDocuments();
       renderList();
-    };
+    });
     btnContainer.appendChild(editBtn);
     btnContainer.appendChild(delBtn);
     item.appendChild(btnContainer);
@@ -214,27 +214,41 @@ function addDocumentToTable(name, date = today, sheets = '1', note = '') {
     row.classList.add('dragging');
   });
   row.addEventListener('dragend', () => row.classList.remove('dragging'));
+
+  // Кнопки редактирования и удаления
+  const editBtn = document.createElement('button');
+  editBtn.textContent = '✎';
+  editBtn.className = 'edit-btn';
+  editBtn.addEventListener('click', function() {
+    currentEditIndex = [...docBody.querySelectorAll('tr')].indexOf(row);
+    currentEditSource = 'table';
+    document.getElementById('editDocName').value = row.children[1].textContent;
+    editModal.style.display = 'block';
+  });
+
+  const delBtn = document.createElement('button');
+  delBtn.textContent = '✖';
+  delBtn.className = 'delete-btn';
+  delBtn.addEventListener('click', function() {
+    row.remove();
+    updateIndexes();
+    saveDocuments();
+  });
+
+  const actionTd = document.createElement('td');
+  actionTd.appendChild(editBtn);
+  actionTd.appendChild(delBtn);
+
   row.innerHTML = `
     <td></td>
     <td>${name}</td>
     <td><input type="date" value="${date}"/></td>
     <td><input type="number" value="${sheets}" min="1" style="width: 100%"/></td>
     <td>${note}</td>
-    <td>
-      <button class="edit-btn" onclick="editTableDocument(this)">✎</button>
-      <button class="delete-btn" onclick="this.closest('tr').remove(); updateIndexes(); saveDocuments();">✖</button>
-    </td>
   `;
+  row.appendChild(actionTd);
   docBody.appendChild(row);
   updateIndexes();
-}
-
-window.editTableDocument = function(button) {
-  const row = button.closest('tr');
-  currentEditIndex = [...docBody.querySelectorAll('tr')].indexOf(row);
-  currentEditSource = 'table';
-  document.getElementById('editDocName').value = row.children[1].textContent;
-  editModal.style.display = 'block';
 }
 
 function saveEditedDocument() {
